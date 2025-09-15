@@ -73,7 +73,6 @@ while True:
         frame = 1
         goc = 0
 
-
     screen.blit(anh_nen, (0, 0))
 
     chim_xoay = pygame.transform.rotate(chim[frame], goc)
