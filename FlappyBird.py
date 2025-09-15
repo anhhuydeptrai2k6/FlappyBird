@@ -54,7 +54,7 @@ while True:
             dangchoi = True
             chimbay = -300
         if event.type == taocot:
-            y = random.randint(200, 500)
+            y = random.randint(200, 450)
             dscot.append([432, y])
 
     if dangchoi:
@@ -80,12 +80,12 @@ while True:
     screen.blit(chim_xoay, chim_xoay_rect)
 
 
-    for cotxanhX in dscot:
-        cotxanhX[0] -= 3
-        screen.blit(cot_xanh_duoi, (cotxanhX[0], cotxanhX[1]))
-        screen.blit(cot_xanh_tren, (cotxanhX[0], cotxanhX[1]-550))
-        if cotxanhX[0] < -41*1.5:
-            dscot.remove(cotxanhX)
+    for cot in dscot:
+        cot[0] -= 3
+        screen.blit(cot_xanh_duoi, (cot[0], cot[1]))
+        screen.blit(cot_xanh_tren, (cot[0], cot[1] - 550))
+        if cot[0] < -41*1.5:
+            dscot.remove(cot)
 
     matdatX -= 1
     if matdatX < -672 :
