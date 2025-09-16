@@ -114,6 +114,9 @@ while True:
             screen.blit(cot_xanh_tren, (cot[0], cot[1] - 550))
             if cot[0] < -41*1.5:
                 dscot.remove(cot)
+    if (chim_rect.top < 0 or chim_rect.bottom > 544) and not gameover:
+        gameover = True
+        dangchoi = False
     if gameover and not dangchoi:
         chimbay = 0
         frame = 1
