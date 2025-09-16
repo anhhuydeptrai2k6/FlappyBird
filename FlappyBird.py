@@ -42,6 +42,10 @@ dscot = []
 game_over = pygame.image.load("assets/FlappyBird/game_over.png")
 game_over = pygame.transform.scale(game_over, (192*1.5, 42*1.5))
 
+khoi_dong = pygame.image.load("assets/FlappyBird/khoi_dong.png")
+khoi_dong = pygame.transform.scale(khoi_dong, (145*1.5, 210*1.5))
+choilandau = 1
+
 trongluc = 600
 chimbay = 0
 dangchoi = False
@@ -59,6 +63,7 @@ while True:
                 pygame.time.set_timer(taocot, 3000)
             dangchoi = True
             gameover = False
+            choilandau = 2
             chimbay = -300
         if event.type == taocot:
             y = random.randint(200, 450)
@@ -81,6 +86,9 @@ while True:
         goc = 0
 
     screen.blit(anh_nen, (0, 0))
+
+    if choilandau == 1:
+        screen.blit(khoi_dong, (110, 150))
 
     chim_xoay = pygame.transform.rotate(chim[frame], goc)
     chim_xoay_rect = chim_xoay.get_rect(center = chim_rect.center)
@@ -105,9 +113,10 @@ while True:
         for cot in dscot:
             screen.blit(cot_xanh_duoi, (cot[0], cot[1]))
             screen.blit(cot_xanh_tren, (cot[0], cot[1] - 550))
-        screen.blit(game_over, (200, 300))
+        screen.blit(game_over, (80, 280))
 
-    matdatX -= 1
+    if not gameover:
+        matdatX -= 1
     if matdatX < -672 :
         matdatX += 672
     for i in range(0,2,1):
