@@ -46,10 +46,14 @@ khoi_dong = pygame.image.load("assets/FlappyBird/khoi_dong.png")
 khoi_dong = pygame.transform.scale(khoi_dong, (145*1.5, 210*1.5))
 choilandau = 1
 
+forngame = pygame.font.Font("04B_19.TTF", 40)
+
 trongluc = 600
 chimbay = 0
 dangchoi = False
 gameover = False
+score = 0
+highscore = 0
 
 while True:
     delta = clock.tick(60) / 1000
@@ -64,6 +68,7 @@ while True:
                 chim_rect.center = (100, 350)
                 chimbay = 0
                 matdatX = 0
+                score = 0
                 gameover = False
 
             if not dangchoi:
@@ -74,7 +79,7 @@ while True:
             chimbay = -300
         if event.type == taocot:
             y = random.randint(200, 450)
-            dscot.append([432, y])
+            dscot.append([432, y, False])
 
     if dangchoi and not gameover:
         chimbay += trongluc * delta
@@ -108,15 +113,21 @@ while True:
             if (chim_rect.colliderect(cot_duoi_rect) or chim_rect.colliderect(cot_tren_rect)) and not gameover:
                 gameover = True
                 dangchoi = False
+            cotX = cot[0] + (41 * 1.5)/2
+            if not cot[2] and cotX < chim_rect.centerx:
+                score += 1
+                if highscore < score:
+                    highscore = score
+                cot[2] = True
             if not gameover:
                 cot[0] -= 3
             screen.blit(cot_xanh_duoi, (cot[0], cot[1]))
             screen.blit(cot_xanh_tren, (cot[0], cot[1] - 550))
             if cot[0] < -41*1.5:
                 dscot.remove(cot)
-    if (chim_rect.top < 0 or chim_rect.bottom > 544) and not gameover:
-        gameover = True
-        dangchoi = False
+        if (chim_rect.top < 0 or chim_rect.bottom > 544) and not gameover:
+            gameover = True
+            dangchoi = False
     if gameover and not dangchoi:
         chimbay = 0
         frame = 1
@@ -132,4 +143,8 @@ while True:
     for i in range(0,2,1):
         screen.blit(mat_dat, (matdatX + i*672, 544))
 
+    textdiem = forngame.render("Score : " + str(score), True, (255, 255, 255))
+    screen.blit(textdiem, (180, 50))
+    textdiemcao = forngame.render("High score : " + str(highscore), True, (255, 255, 255))
+    screen.blit(textdiemcao, (100, 100))
     pygame.display.update()
