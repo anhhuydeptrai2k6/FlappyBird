@@ -32,14 +32,20 @@ chim_rect = chim[1].get_rect(center = (100, 350))
 
 cot_xanh_duoi = pygame.image.load("assets/FlappyBird/cot_xanh.png")
 cot_xanh_duoi = pygame.transform.scale(cot_xanh_duoi, (41*1.5, 253*1.5))
+cot_xanh_duoi_rect = cot_xanh_duoi.get_rect()
 cot_xanh_tren = pygame.transform.flip(cot_xanh_duoi, False, True)
 cot_xanh_tren = pygame.transform.scale(cot_xanh_tren, (41*1.5, 253*1.5))
+cot_xanh_tren_rect = cot_xanh_tren.get_rect()
 taocot = pygame.USEREVENT
 dscot = []
+
+game_over = pygame.image.load("assets/FlappyBird/game_over.png")
+game_over = pygame.transform.scale(game_over, (192*1.5, 42*1.5))
 
 trongluc = 600
 chimbay = 0
 dangchoi = False
+gameover = False
 
 while True:
     delta = clock.tick(60) / 1000
@@ -52,12 +58,13 @@ while True:
             if not dangchoi:
                 pygame.time.set_timer(taocot, 3000)
             dangchoi = True
+            gameover = False
             chimbay = -300
         if event.type == taocot:
             y = random.randint(200, 450)
             dscot.append([432, y])
 
-    if dangchoi:
+    if dangchoi and not gameover:
         chimbay += trongluc * delta
         chim_rect.centery += chimbay * delta
 
@@ -79,13 +86,26 @@ while True:
     chim_xoay_rect = chim_xoay.get_rect(center = chim_rect.center)
     screen.blit(chim_xoay, chim_xoay_rect)
 
-
-    for cot in dscot:
-        cot[0] -= 3
-        screen.blit(cot_xanh_duoi, (cot[0], cot[1]))
-        screen.blit(cot_xanh_tren, (cot[0], cot[1] - 550))
-        if cot[0] < -41*1.5:
-            dscot.remove(cot)
+    if not gameover:
+        for cot in dscot:
+            cot_duoi_rect = pygame.Rect(cot[0], cot[1], 41 * 1.5, 253 * 1.5)
+            cot_tren_rect = pygame.Rect(cot[0], cot[1] - 550, 41 * 1.5, 253 * 1.5)
+            if (chim_rect.colliderect(cot_duoi_rect) or chim_rect.colliderect(cot_tren_rect)) and not gameover:
+                gameover = True
+                dangchoi = False
+            if not gameover:
+                cot[0] -= 3
+            screen.blit(cot_xanh_duoi, (cot[0], cot[1]))
+            screen.blit(cot_xanh_tren, (cot[0], cot[1] - 550))
+            if cot[0] < -41*1.5:
+                dscot.remove(cot)
+    if gameover and not dangchoi:
+        chimbay = 0
+        frame = 1
+        for cot in dscot:
+            screen.blit(cot_xanh_duoi, (cot[0], cot[1]))
+            screen.blit(cot_xanh_tren, (cot[0], cot[1] - 550))
+        screen.blit(game_over, (200, 300))
 
     matdatX -= 1
     if matdatX < -672 :
