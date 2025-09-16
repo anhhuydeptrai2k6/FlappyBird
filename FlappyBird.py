@@ -46,7 +46,7 @@ khoi_dong = pygame.image.load("assets/FlappyBird/khoi_dong.png")
 khoi_dong = pygame.transform.scale(khoi_dong, (145*1.5, 210*1.5))
 choilandau = 1
 
-forngame = pygame.font.Font("04B_19.TTF", 40)
+forngame = pygame.font.Font("04B_19.TTF", 38)
 
 trongluc = 600
 chimbay = 0
@@ -144,7 +144,7 @@ while True:
         screen.blit(mat_dat, (matdatX + i*672, 544))
 
     textdiem = forngame.render("Score : " + str(score), True, (255, 255, 255))
-    screen.blit(textdiem, (180, 50))
+    screen.blit(textdiem, (150, 50))
     textdiemcao = forngame.render("High score : " + str(highscore), True, (255, 255, 255))
     screen.blit(textdiemcao, (100, 100))
     pygame.display.update()
