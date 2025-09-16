@@ -59,6 +59,13 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN or (event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE):
+            if gameover:
+                dscot.clear()
+                chim_rect.center = (100, 350)
+                chimbay = 0
+                matdatX = 0
+                gameover = False
+
             if not dangchoi:
                 pygame.time.set_timer(taocot, 3000)
             dangchoi = True
