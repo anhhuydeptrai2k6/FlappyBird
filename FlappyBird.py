@@ -144,7 +144,9 @@ while True:
         screen.blit(mat_dat, (matdatX + i*672, 544))
 
     textdiem = forngame.render("Score : " + str(score), True, (255, 255, 255))
-    screen.blit(textdiem, (150, 50))
+    if choilandau == 2 :
+        screen.blit(textdiem, (150, 50))
     textdiemcao = forngame.render("High score : " + str(highscore), True, (255, 255, 255))
-    screen.blit(textdiemcao, (100, 100))
+    if choilandau == 2 :
+        screen.blit(textdiemcao, (100, 100))
     pygame.display.update()
